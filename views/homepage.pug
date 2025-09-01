@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    div.container
+      h1 Pet Records
+      
+      div.actions
+        a(href='/update-cobj', class='add-button') Add to this table
+      
+      if error
+        div.error= error
+      
+      if pets && pets.length > 0
+        table.pets-table
+          thead
+            tr
+              th Name
+              th Type
+              th Description
+              th ID
+              th Actions
+          tbody
+            each pet in pets
+              tr
+                td= pet.properties.name || 'N/A'
+                td= pet.properties.type || 'N/A'
+                td= pet.properties.description || 'N/A'
+                td= pet.id
+                td
+                  a(href='/update-cobj?id=' + pet.id, class='edit-link') Edit
+      else
+        div.no-data
+          p No pet records found.
+          p 
+            a(href='/update-cobj') Click here to add the first pet record!
