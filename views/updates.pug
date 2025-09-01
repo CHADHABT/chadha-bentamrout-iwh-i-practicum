@@ -1,0 +1,40 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    div.container
+      if isUpdate
+        h1 Update Pet Record
+      else
+        h1 Add New Pet Record
+      
+      div.navigation
+        a(href='/', class='back-button') Return to the homepage
+      
+      if error
+        div.error= error
+      
+      form.pet-form(method='POST', action='/update-cobj')
+        if pet && pet.id
+          input(type='hidden', name='petId', value=pet.id)
+        
+        div.form-group
+          label(for='name') Pet Name *
+          input(type='text', id='name', name='name', required, placeholder='Enter pet name', value=pet && pet.properties ? pet.properties.name : '')
+        
+        div.form-group
+          label(for='type') Pet Type *
+          input(type='text', id='type', name='type', required, placeholder='e.g., Dog, Cat, Bird', value=pet && pet.properties ? pet.properties.type : '')
+        
+        div.form-group
+          label(for='description') Description *
+          textarea(id='description', name='description', required, placeholder='Brief description of the pet', rows='4')= pet && pet.properties ? pet.properties.description : ''
+        
+        div.form-actions
+          if isUpdate
+            button(type='submit', class='submit-button') Update Pet Record
+          else
+            button(type='submit', class='submit-button') Add Pet Record
+          a(href='/', class='cancel-button') Cancel
